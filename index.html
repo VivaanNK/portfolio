@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vivaan Kaushik — Portfolio</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-neutral-900 text-neutral-100 antialiased font-sans">
+
+  <!-- NAV -->
+  <header class="fixed w-full z-40 backdrop-blur-md bg-neutral-900/70">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="text-2xl font-semibold">Vivaan Kaushik</div>
+        <div class="text-sm text-neutral-400">MS Engineering Management & AI • CMU</div>
+      </div>
+      <nav class="space-x-6 text-sm text-neutral-300 hidden md:block">
+        <a href="#about" class="hover:text-white">About</a>
+        <a href="#experience" class="hover:text-white">Experience</a>
+        <a href="#projects" class="hover:text-white">Projects</a>
+        <a href="#contact" class="hover:text-white">Contact</a>
+        <a href="resume.pdf" target="_blank"
+           class="ml-4 inline-block px-4 py-2 border border-neutral-700 rounded-md text-sm">Resume</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero" class="min-h-screen flex items-center justify-center">
+    <div class="max-w-6xl mx-auto px-6 py-28 flex flex-col md:flex-row items-center gap-12">
+      <div class="flex-1">
+        <h1 class="text-5xl md:text-6xl font-semibold leading-tight">Vivaan Kaushik</h1>
+        <p class="mt-6 text-lg text-neutral-300 max-w-2xl">
+          Engineering Management & AI @ Carnegie Mellon • Product Management & AI Strategy • IEEE-published ML researcher. 
+          I build practical AI products, lead GTM strategy, and ship secure ML systems.
+        </p>
+
+        <div class="mt-8 flex items-center gap-4">
+          <a href="#projects" class="px-6 py-3 bg-neutral-100 text-neutral-900 rounded-md font-medium">See Projects</a>
+          <a href="#contact" class="px-5 py-3 border border-neutral-700 rounded-md text-sm">Get in touch</a>
+        </div>
+
+        <div class="mt-8 text-sm text-neutral-400 space-y-2">
+          <div><strong>Location:</strong> Pittsburgh, PA</div>
+          <div><strong>Email:</strong> vkaushik@andrew.cmu.edu</div>
+          <div class="mt-2 flex gap-3">
+            <a href="https://www.linkedin.com/in/vivaan-kaushik-96abb9302/" class="underline">LinkedIn</a>
+            <a href="https://github.com/VivaanNK/data-science-project" class="underline">GitHub</a>
+            <a href="https://ieeexplore.ieee.org/document/10983002" class="underline">IEEE Paper</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1 flex items-center justify-center">
+        <div class="w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden ring-1 ring-white/10">
+          <img src="photo.jpg" alt="Vivaan" class="w-full h-full object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="border-t border-neutral-800/60">
+    <div class="max-w-6xl mx-auto px-6 py-24">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl font-semibold">About</h2>
+          <p class="mt-4 text-neutral-300">
+            Hey there — I'm Vivaan, a master's student at Carnegie Mellon exploring the intersection of product management and AI. 
+            I enjoy turning complex ideas into practical solutions—whether that’s building a GenAI automation system at EY, driving 
+            B2B growth strategies at Voll Santé, or publishing machine learning security research.
+          </p>
+
+          <div class="mt-6 grid sm:grid-cols-2 gap-4">
+            <div class="bg-neutral-800 p-4 rounded-md">
+              <div class="text-xs text-neutral-400">Education</div>
+              <div class="mt-1 font-medium">CMU — MS Engineering Management & AI (Dec 2026)</div>
+              <div class="text-sm text-neutral-400 mt-1">VIT Vellore — B.Tech Computer Science (May 2025)</div>
+            </div>
+            <div class="bg-neutral-800 p-4 rounded-md">
+              <div class="text-xs text-neutral-400">Skills</div>
+              <div class="mt-1 font-medium">Product Strategy • Roadmaps • Stakeholder Mgmt</div>
+              <div class="text-sm text-neutral-400 mt-1">Technical: Python, SQL, Tableau, ML, LLMs</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-sm uppercase text-neutral-400 tracking-wide">Leadership & Service</h3>
+          <ul class="mt-4 space-y-3 text-neutral-300">
+            <li>Coordinated medical camps serving 300+ patients.</li>
+            <li>Organized tech fests (IEEE, Robotics Club) and led student NGOs.</li>
+            <li>Strong cross-functional communicator with experience handling stakeholders across engineering and business.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="border-t border-neutral-800/60">
+    <div class="max-w-6xl mx-auto px-6 py-20">
+      <h2 class="text-3xl font-semibold">Experience</h2>
+      <div class="mt-8 space-y-6">
+        <!-- EY -->
+        <article class="bg-neutral-850 p-6 rounded-2xl border border-neutral-800">
+          <h3 class="text-lg font-semibold">Ernst & Young — Product Management Intern (GenAI)</h3>
+          <p class="text-sm text-neutral-400">Jan 2025 — Jun 2025 • Mumbai, India</p>
+          <ul class="mt-4 text-neutral-300 list-disc ml-5 space-y-2">
+            <li>Designed and launched a GenAI-powered procurement automation system reducing manual work by 40%.</li>
+            <li>Built roadmaps and stakeholder adoption strategies that increased efficiency by 25%.</li>
+          </ul>
+        </article>
+
+        <!-- Voll Santé -->
+        <article class="bg-neutral-850 p-6 rounded-2xl border border-neutral-800">
+          <h3 class="text-lg font-semibold">Voll Santé — Product Strategy Intern</h3>
+          <p class="text-sm text-neutral-400">Mumbai, India</p>
+          <ul class="mt-4 text-neutral-300 list-disc ml-5 space-y-2">
+            <li>Led B2B partnership strategy generating 15+ qualified leads and improving partner conversion by 30%.</li>
+            <li>Delivered competitor benchmarking and GTM collateral across 3 verticals.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="border-t border-neutral-800/60">
+    <div class="max-w-6xl mx-auto px-6 py-20">
+      <h2 class="text-3xl font-semibold">Projects</h2>
+      <p class="mt-3 text-neutral-400">Highlighted projects from resume + PM-focused additions.</p>
+
+      <div class="mt-8 grid md:grid-cols-2 gap-6">
+        <!-- Resume Projects -->
+        <article class="bg-neutral-850 p-6 rounded-2xl border border-neutral-800">
+          <h3 class="text-xl font-semibold">ML Intrusion Detection System (UPCON 2024)</h3>
+          <p class="text-sm text-pink-400 mt-1">Published • 92% Accuracy</p>
+          <p class="mt-3 text-neutral-300">Built anomaly detection pipeline, IEEE published.</p>
+        </article>
+
+        <article class="bg-neutral-850 p-6 rounded-2xl border border-neutral-800">
+          <h3 class="text-xl font-semibold">STD Prediction with ML</h3>
+          <p class="text-sm text-neutral-400 mt-1">87% Accuracy</p>
+          <p class="mt-3 text-neutral-300">Created classifiers for diagnostic decision-making.</p>
+        </article>
+
+        <!-- PM Projects -->
+        <article class="bg-neutral-850 p-6 rounded-2xl border border-neutral-800">
+          <h3 class="text-xl font-semibold">AI Product Prioritization Simulator</h3>
+          <p class="text-sm text-emerald-400 mt-1">PM + Data-Driven</p>
+          <p class="mt-3 text-neutral-300">Tool to help product teams prioritize features by simulating customer impact and ROI.</p>
+        </article>
+
+        <article class="bg-neutral-850 p-6 rounded-2xl border border-neutral-800">
+          <h3 class="text-xl font-semibold">GenAI Deployment & Adoption Playbook</h3>
+          <p class="text-sm text-emerald-400 mt-1">Strategy + Adoption</p>
+          <p class="mt-3 text-neutral-300">Playbook + demo for enterprise GenAI rollout, with adoption metrics & templates.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="border-t border-neutral-800/60">
+    <div class="max-w-4xl mx-auto px-6 py-20 text-center">
+      <h2 class="text-3xl font-semibold">Let's connect</h2>
+      <p class="mt-3 text-neutral-400">
+        Open to product roles, AI strategy collaborations, or just a coffee chat about tech.
+      </p>
+
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="mailto:vkaushik@andrew.cmu.edu" class="px-6 py-3 bg-neutral-100 text-neutral-900 rounded-md font-medium">Email Vivaan</a>
+        <a href="https://www.linkedin.com/in/vivaan-kaushik-96abb9302/" class="px-6 py-3 border border-neutral-700 rounded-md">LinkedIn</a>
+        <a href="resume.pdf" target="_blank"
+           class="px-6 py-3 border border-neutral-700 rounded-md">Download Resume</a>
+      </div>
+
+      <p class="mt-8 text-sm text-neutral-500">© 2025 Vivaan Kaushik</p>
+    </div>
+  </section>
+
+  <div class="h-24"></div>
+</body>
+</html>
