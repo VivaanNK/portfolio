@@ -3,74 +3,75 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vivaan Kaushik — Portfolio</title>
-  <!-- Tailwind CDN -->
-  <title>Vivaan Kaushik | Product x AI</title>
+  <title>Vivaan Kaushik — Product & AI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            ink: '#09090f',
-            mist: '#d9ddff'
-          },
           animation: {
-            float: 'float 7s ease-in-out infinite',
-            pulseSlow: 'pulse 6s ease-in-out infinite',
-            slideUp: 'slideUp .8s ease forwards'
+            'float': 'float 6s ease-in-out infinite',
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'slide-up': 'slideUp 0.6s ease-out forwards',
           },
           keyframes: {
             float: {
               '0%, 100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-14px)' }
+              '50%': { transform: 'translateY(-20px)' }
+            },
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
             },
             slideUp: {
-              '0%': { opacity: 0, transform: 'translateY(30px)' },
-              '100%': { opacity: 1, transform: 'translateY(0px)' }
+              '0%': { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
             }
-          },
-          boxShadow: {
-            glow: '0 0 0 1px rgba(255,255,255,0.08), 0 18px 50px rgba(126, 97, 255, 0.25)'
           }
         }
       }
     }
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      color-scheme: dark;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      overflow-y: scroll;
     }
 
     body {
-      background:
-        radial-gradient(circle at 20% 10%, rgba(81, 102, 255, 0.28), transparent 35%),
-        radial-gradient(circle at 90% 15%, rgba(215, 76, 255, 0.2), transparent 35%),
-        radial-gradient(circle at 20% 90%, rgba(42, 210, 255, 0.12), transparent 35%),
-        #09090f;
+      font-family: 'Inter', sans-serif;
+      background: #000000;
+      color: #ffffff;
+      overflow-x: hidden;
     }
 
-    .grain::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 0.5px, transparent 0.5px);
-      background-size: 3px 3px;
-      opacity: 0.12;
-      pointer-events: none;
-      z-index: 1;
+    h1, h2, h3 {
+      font-family: 'Space Grotesk', sans-serif;
     }
 
-    .glass {
-      background: linear-gradient(140deg, rgba(18, 18, 34, 0.82), rgba(13, 14, 26, 0.45));
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+    section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
     }
 
     .reveal {
       opacity: 0;
       transform: translateY(20px);
-      transition: opacity 600ms ease, transform 600ms ease;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .reveal.visible {
@@ -78,120 +79,664 @@
       transform: translateY(0);
     }
 
-    .timeline::before {
-      content: "";
+    .card {
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card:hover {
+      background: #121212;
+      border-color: #333333;
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(255, 255, 255, 0.05);
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .project-card::before {
+      content: '';
       position: absolute;
-      left: 8px;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .project-card:hover::before {
+      left: 100%;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(255, 255, 255, 0.08);
+    }
+
+    .timeline-line {
+      position: absolute;
+      left: 32px;
       top: 0;
       bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, rgba(144, 161, 255, 0.7), rgba(137, 255, 238, 0.25));
+      width: 1px;
+      background: #333333;
+    }
+
+    .timeline-dot {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: #1a1a1a;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #ffffff;
+      border-radius: 2px;
+      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .skill-card {
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .skill-card:hover {
+      transform: scale(1.02);
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #ffffff;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .btn-primary:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .accent-border {
+      border-left: 2px solid #ffffff;
+    }
+
+    .tag {
+      background: #1a1a1a;
+      border: 1px solid #333333;
+      transition: all 0.2s ease;
+    }
+
+    .tag:hover {
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .timeline-line {
+        left: 24px;
+      }
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #333333;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555555;
+    }
+
+    /* Grain effect for film aesthetic */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.02) 2px, rgba(255, 255, 255, 0.02) 4px);
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.3;
     }
   </style>
 </head>
-<body class="bg-neutral-900 text-neutral-100 antialiased font-sans">
-
-  <!-- NAV -->
-  <header class="fixed w-full z-40 backdrop-blur-md bg-neutral-900/70">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <div class="text-2xl font-semibold">Vivaan Kaushik</div>
-        <div class="text-sm text-neutral-400">MS Engineering Management & AI • CMU</div>
-<body class="text-slate-100 antialiased grain">
-  <div class="relative z-10">
-    <header class="fixed top-0 inset-x-0 z-50 border-b border-white/10 bg-ink/70 backdrop-blur-xl">
-      <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-        <a href="#home" class="font-semibold tracking-wide text-sm md:text-base">VIVAAN KAUSHIK</a>
-        <nav class="hidden md:flex items-center gap-6 text-sm text-slate-300">
-          <a href="#about" class="hover:text-white transition">About</a>
-          <a href="#experience" class="hover:text-white transition">Experience</a>
-          <a href="#projects" class="hover:text-white transition">Projects</a>
-          <a href="#contact" class="hover:text-white transition">Contact</a>
-        </nav>
-        <a href="resume.pdf" target="_blank" class="text-xs md:text-sm px-4 py-2 rounded-full bg-white text-slate-900 font-medium hover:scale-105 transition">Resume</a>
+<body>
+  <!-- NAVIGATION -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-xl border-b border-gray-900">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center justify-between">
+      <a href="#home" class="text-xl font-bold tracking-tight">VIVAAN KAUSHIK</a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="#work" class="nav-link text-gray-400 hover:text-white">Work</a>
+        <a href="#projects" class="nav-link text-gray-400 hover:text-white">Projects</a>
+        <a href="#skills" class="nav-link text-gray-400 hover:text-white">Skills</a>
+        <a href="#about" class="nav-link text-gray-400 hover:text-white">About</a>
+        <a href="#contact" class="nav-link text-gray-400 hover:text-white">Contact</a>
       </div>
-      <nav class="space-x-6 text-sm text-neutral-300 hidden md:block">
-        <a href="#about" class="hover:text-white">About</a>
-        <a href="#experience" class="hover:text-white">Experience</a>
-        <a href="#projects" class="hover:text-white">Projects</a>
-        <a href="#contact" class="hover:text-white">Contact</a>
-        <a href="resume.pdf" target="_blank"
-           class="ml-4 inline-block px-4 py-2 border border-neutral-700 rounded-md text-sm">Resume</a>
-      </nav>
+      <a href="resume.pdf" target="_blank" class="btn-primary px-6 py-2 bg-white text-black rounded-none font-medium text-sm hover:bg-gray-200">
+        Resume
+      </a>
     </div>
-  </header>
+  </nav>
 
   <!-- HERO -->
-  <section id="hero" class="min-h-screen flex items-center justify-center">
-    <div class="max-w-6xl mx-auto px-6 py-28 flex flex-col md:flex-row items-center gap-12">
-      <div class="flex-1">
-        <h1 class="text-5xl md:text-6xl font-semibold leading-tight">Vivaan Kaushik</h1>
-        <p class="mt-6 text-lg text-neutral-300 max-w-2xl">
-          Engineering Management & AI @ Carnegie Mellon • Product Management & AI Strategy • IEEE-published ML researcher. 
-          I build practical AI products, lead GTM strategy, and ship secure ML systems.
-        </p>
-
-        <div class="mt-8 flex items-center gap-4">
-          <a href="#projects" class="px-6 py-3 bg-neutral-100 text-neutral-900 rounded-md font-medium">See Projects</a>
-          <a href="#contact" class="px-5 py-3 border border-neutral-700 rounded-md text-sm">Get in touch</a>
-        </div>
-    </header>
-
-        <div class="mt-8 text-sm text-neutral-400 space-y-2">
-          <div><strong>Location:</strong> Pittsburgh, PA</div>
-          <div><strong>Email:</strong> vkaushik@andrew.cmu.edu</div>
-          <div class="mt-2 flex gap-3">
-            <a href="https://www.linkedin.com/in/vivaan-kaushik-96abb9302/" class="underline">LinkedIn</a>
-            <a href="https://github.com/VivaanNK/data-science-project" class="underline">GitHub</a>
-            <a href="https://ieeexplore.ieee.org/document/10983002" class="underline">IEEE Paper</a>
-    <main id="home" class="pt-28 pb-16">
-      <section class="max-w-6xl mx-auto px-6 min-h-[85vh] grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
-        <div>
-          <p class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-indigo-200/90 bg-indigo-400/20 border border-indigo-300/30 px-4 py-2 rounded-full reveal">
-            Product • AI • Strategy
-          </p>
-          <h1 class="mt-6 text-4xl md:text-6xl font-bold leading-tight reveal">
-            I build AI products people actually <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-fuchsia-300 to-cyan-300">love using</span>.
-          </h1>
-          <p class="mt-6 text-slate-300 text-lg max-w-2xl reveal">
-            I'm Vivaan Kaushik, a CMU Engineering Management + AI master's student blending product strategy, GTM execution, and ML systems to turn ambitious ideas into measurable impact.
-          </p>
-          <div class="mt-8 flex flex-wrap gap-3 reveal">
-            <a href="#projects" class="px-6 py-3 rounded-full bg-gradient-to-r from-indigo-400 to-fuchsia-400 text-slate-900 font-semibold hover:scale-105 transition">Explore Projects</a>
-            <a href="#contact" class="px-6 py-3 rounded-full border border-white/25 hover:border-white/60 transition">Let's Connect</a>
+  <section id="home" class="relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 py-20 grid lg:grid-cols-[1.3fr_0.7fr] gap-16 items-center relative z-10">
+      <div>
+        <div class="reveal">
+          <div class="inline-block px-4 py-1 border border-white/20 mb-6">
+            <span class="text-xs font-semibold uppercase tracking-widest">Product × AI × Strategy</span>
           </div>
-          <div class="mt-8 grid sm:grid-cols-3 gap-4 reveal">
-            <div class="glass rounded-2xl p-4">
-              <p class="text-2xl font-semibold">4.0</p>
-              <p class="text-xs text-slate-300">CMU GPA</p>
+          <h1 class="text-5xl lg:text-7xl font-bold leading-tight mb-6 tracking-tight">
+            Vivaan<br/>Kaushik
+          </h1>
+          <p class="text-xl text-gray-400 leading-relaxed mb-4 max-w-xl">
+            I build AI products that people actually love using. Currently at Carnegie Mellon turning ambitious ideas into real business impact.
+          </p>
+          <p class="text-lg text-gray-500">
+            Product strategist • ML engineer • Startup builder
+          </p>
+        </div>
+
+        <div class="reveal flex flex-wrap gap-4 mt-8">
+          <a href="#projects" class="btn-primary px-8 py-4 bg-white text-black rounded-none font-semibold text-lg hover:bg-gray-200">
+            View Work
+          </a>
+          <a href="#contact" class="px-8 py-4 border border-white text-white rounded-none font-semibold text-lg hover:bg-white hover:text-black transition-all">
+            Contact
+          </a>
+        </div>
+
+        <div class="reveal grid grid-cols-3 gap-6 mt-12">
+          <div class="card p-5 border-t-2 border-white">
+            <p class="stat-number">4.0</p>
+            <p class="text-sm text-gray-400 mt-2 font-medium">GPA at CMU</p>
+          </div>
+          <div class="card p-5 border-t-2 border-white">
+            <p class="stat-number">40%</p>
+            <p class="text-sm text-gray-400 mt-2 font-medium">Efficiency gain</p>
+          </div>
+          <div class="card p-5 border-t-2 border-white">
+            <p class="stat-number">Top 2%</p>
+            <p class="text-sm text-gray-400 mt-2 font-medium">VIT Class</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal flex justify-center lg:justify-end">
+        <div class="relative">
+          <div class="w-full max-w-sm aspect-[3/4] overflow-hidden border-4 border-white shadow-2xl transform hover:scale-105 transition-transform duration-500">
+            <img src="portfolio.jpeg" alt="Vivaan Kaushik" class="w-full h-full object-cover grayscale" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK EXPERIENCE -->
+  <section id="work" class="relative">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 py-20">
+      <div class="reveal text-center mb-16">
+        <p class="text-sm font-semibold uppercase tracking-widest text-gray-500 mb-3">Career Journey</p>
+        <h2 class="text-4xl lg:text-5xl font-bold tracking-tight">Work Experience</h2>
+        <div class="w-24 h-px bg-white mx-auto mt-6"></div>
+      </div>
+
+      <div class="space-y-12 relative">
+        <div class="timeline-line hidden md:block"></div>
+
+        <!-- Voll Sante -->
+        <article class="reveal relative pl-0 md:pl-20">
+          <div class="timeline-dot absolute left-7 top-6 w-2 h-2 bg-white rounded-none border-2 border-black hidden md:block"></div>
+          <div class="card p-8 border-l-4 border-white">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+              <div>
+                <h3 class="text-2xl font-bold">Product Strategy Intern</h3>
+                <p class="text-lg text-gray-400 font-semibold mt-1">Voll Santé</p>
+              </div>
+              <span class="inline-block px-4 py-1 border border-white/20 text-sm font-medium mt-2 md:mt-0">Jun 2025 – Aug 2025</span>
             </div>
-            <div class="glass rounded-2xl p-4">
-              <p class="text-2xl font-semibold">40%</p>
-              <p class="text-xs text-slate-300">Manual effort reduction at EY</p>
+            <p class="text-gray-400 italic mb-4">Led go-to-market strategy for wellness products, driving B2B growth</p>
+            <ul class="space-y-3 text-gray-300">
+              <li class="flex gap-3"><span class="text-white">—</span><span>Orchestrated GTM strategy generating <strong>15+ B2B leads</strong> (2x intern benchmark)</span></li>
+              <li class="flex gap-3"><span class="text-white">—</span><span>Drove 3 co-branded campaigns boosting conversion by <strong>30%</strong></span></li>
+              <li class="flex gap-3"><span class="text-white">—</span><span>Analyzed 10+ competitors to optimize pricing & supply chain strategy</span></li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- EY -->
+        <article class="reveal relative pl-0 md:pl-20">
+          <div class="timeline-dot absolute left-7 top-6 w-2 h-2 bg-white rounded-none border-2 border-black hidden md:block"></div>
+          <div class="card p-8 border-l-4 border-white">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+              <div>
+                <h3 class="text-2xl font-bold">Product Management Intern (GenAI)</h3>
+                <p class="text-lg text-gray-400 font-semibold mt-1">Ernst & Young</p>
+              </div>
+              <span class="inline-block px-4 py-1 border border-white/20 text-sm font-medium mt-2 md:mt-0">Jan 2025 – Jun 2025</span>
             </div>
-            <div class="glass rounded-2xl p-4">
-              <p class="text-2xl font-semibold">15+</p>
-              <p class="text-xs text-slate-300">B2B leads at Voll Santé</p>
+            <p class="text-gray-400 italic mb-4">Owned GenAI procurement automation delivery across enterprise teams</p>
+            <ul class="space-y-3 text-gray-300">
+              <li class="flex gap-3"><span class="text-white">—</span><span>Reduced manual effort by <strong>40%</strong> across 3 procurement functions</span></li>
+              <li class="flex gap-3"><span class="text-white">—</span><span>Cut decision turnaround by <strong>25%</strong> with real-time analytics</span></li>
+              <li class="flex gap-3"><span class="text-white">—</span><span>Led 6+ sprints aligning 5+ stakeholders for on-time delivery</span></li>
+              <li class="flex gap-3"><span class="text-white">—</span><span>Secured deployment approval across 3 business units</span></li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Franklin Templeton -->
+        <article class="reveal relative pl-0 md:pl-20">
+          <div class="timeline-dot absolute left-7 top-6 w-2 h-2 bg-white rounded-none border-2 border-black hidden md:block"></div>
+          <div class="card p-8 border-l-4 border-white">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+              <div>
+                <h3 class="text-2xl font-bold">Information Security Intern</h3>
+                <p class="text-lg text-gray-400 font-semibold mt-1">Franklin Templeton</p>
+              </div>
+              <span class="inline-block px-4 py-1 border border-white/20 text-sm font-medium mt-2 md:mt-0">May 2024 – Jun 2024</span>
+            </div>
+            <p class="text-gray-400 italic mb-4">Enhanced phishing detection & security governance</p>
+            <ul class="space-y-3 text-gray-300">
+              <li class="flex gap-3"><span class="text-white">—</span><span>Improved model accuracy by <strong>+18%</strong> ensuring audit compliance</span></li>
+              <li class="flex gap-3"><span class="text-white">—</span><span>Coordinated cross-functional delivery for on-schedule release</span></li>
+              <li class="flex gap-3"><span class="text-white">—</span><span>Developed risk-mitigation framework adopted into annual audit strategy</span></li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Tata Elxsi -->
+        <article class="reveal relative pl-0 md:pl-20">
+          <div class="timeline-dot absolute left-7 top-6 w-2 h-2 bg-white rounded-none border-2 border-black hidden md:block"></div>
+          <div class="card p-8 border-l-4 border-white">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+              <div>
+                <h3 class="text-2xl font-bold">AI Product Intern</h3>
+                <p class="text-lg text-gray-400 font-semibold mt-1">Tata Elxsi</p>
+              </div>
+              <span class="inline-block px-4 py-1 border border-white/20 text-sm font-medium mt-2 md:mt-0">Aug 2023 – Sep 2023</span>
+            </div>
+            <p class="text-gray-400 italic mb-4">Delivered AI-powered speech transcription system</p>
+            <ul class="space-y-3 text-gray-300">
+              <li class="flex gap-3"><span class="text-white">—</span><span>Reduced pipeline delays by <strong>25%</strong> with Whisper-powered system</span></li>
+              <li class="flex gap-3"><span class="text-white">—</span><span>Drove sprint planning across 3+ sprints aligning engineering execution</span></li>
+              <li class="flex gap-3"><span class="text-white">—</span><span>Enabled transcription across 5+ low-bandwidth use cases</span></li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Tata Capital -->
+        <article class="reveal relative pl-0 md:pl-20">
+          <div class="timeline-dot absolute left-7 top-6 w-2 h-2 bg-white rounded-none border-2 border-black hidden md:block"></div>
+          <div class="card p-8 border-l-4 border-white">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+              <div>
+                <h3 class="text-2xl font-bold">Cybersecurity Research Intern</h3>
+                <p class="text-lg text-gray-400 font-semibold mt-1">Tata Capital</p>
+              </div>
+              <span class="inline-block px-4 py-1 border border-white/20 text-sm font-medium mt-2 md:mt-0">Apr 2022 – May 2022</span>
+            </div>
+            <p class="text-gray-400 italic mb-4">Developed security frameworks for audit planning</p>
+            <ul class="space-y-3 text-gray-300">
+              <li class="flex gap-3"><span class="text-white">—</span><span>Designed incident classification framework improving resolution accuracy</span></li>
+              <li class="flex gap-3"><span class="text-white">—</span><span>Authored security trends report informing 2022-23 audit strategy</span></li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="relative">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 py-20">
+      <div class="reveal text-center mb-16">
+        <p class="text-sm font-semibold uppercase tracking-widest text-gray-500 mb-3">Portfolio</p>
+        <h2 class="text-4xl lg:text-5xl font-bold tracking-tight">Featured Projects</h2>
+        <div class="w-24 h-px bg-white mx-auto mt-6"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- GENNA - Featured at top -->
+        <article class="reveal project-card card p-8 border-2 border-white">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <span class="inline-block px-3 py-1 bg-white text-black text-xs font-bold mb-3 uppercase tracking-wider">Featured Startup</span>
+              <h3 class="text-3xl font-bold mb-2">GENNA Fashion Intelligence</h3>
+              <p class="text-sm text-gray-500">Ongoing · Fashion-Tech</p>
+            </div>
+          </div>
+          <p class="text-gray-400 leading-relaxed mb-6">
+            Building an AI-powered fashion intelligence platform that personalizes styling and helps brands forecast demand and trends in real time. Combining consumer preference modeling with trend analytics for delightful UX.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag px-3 py-1 text-xs font-semibold cursor-pointer">Product Strategy</span>
+            <span class="tag px-3 py-1 text-xs font-semibold cursor-pointer">AI/ML</span>
+            <span class="tag px-3 py-1 text-xs font-semibold cursor-pointer">Consumer Tech</span>
+          </div>
+        </article>
+
+        <!-- ML Intrusion Detection -->
+        <article class="reveal project-card card p-8">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <span class="inline-block px-3 py-1 border border-white/20 text-xs font-bold mb-3 uppercase tracking-wider">Published</span>
+              <h3 class="text-2xl font-bold mb-2">ML Intrusion Detection System</h3>
+              <p class="text-sm text-gray-500">IEEE UPCON 2024</p>
+            </div>
+          </div>
+          <p class="text-gray-400 leading-relaxed mb-6">
+            Built a cybersecurity system achieving 92% accuracy in identifying malicious network activity. Led to peer-reviewed publication and presentation at international IEEE conference.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="tag px-3 py-1 text-xs font-semibold cursor-pointer">Python</span>
+            <span class="tag px-3 py-1 text-xs font-semibold cursor-pointer">Machine Learning</span>
+            <span class="tag px-3 py-1 text-xs font-semibold cursor-pointer">92% Accuracy</span>
+          </div>
+          <a href="https://ieeexplore.ieee.org/document/10983002" target="_blank" class="inline-flex items-center gap-2 text-white font-semibold hover:underline">
+            View Publication <span>→</span>
+          </a>
+        </article>
+
+        <!-- STD Prediction -->
+        <article class="reveal project-card card p-8">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <span class="inline-block px-3 py-1 border border-white/20 text-xs font-bold mb-3 uppercase tracking-wider">Healthcare ML</span>
+              <h3 class="text-2xl font-bold mb-2">STD Prediction with ML</h3>
+              <p class="text-sm text-gray-500">Classification Model</p>
+            </div>
+          </div>
+          <p class="text-gray-400 leading-relaxed mb-6">
+            Developed a data-driven screening tool identifying health risk patterns for earlier medical interventions. Achieved 87% classification accuracy supporting informed decision-making.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="tag px-3 py-1 text-xs font-semibold cursor-pointer">Python</span>
+            <span class="tag px-3 py-1 text-xs font-semibold cursor-pointer">SciKit-Learn</span>
+            <span class="tag px-3 py-1 text-xs font-semibold cursor-pointer">TensorFlow</span>
+          </div>
+          <a href="https://github.com/VivaanNK/data-science-project" target="_blank" class="inline-flex items-center gap-2 text-white font-semibold hover:underline">
+            View on GitHub <span>→</span>
+          </a>
+        </article>
+
+        <!-- LSTM Weather -->
+        <article class="reveal project-card card p-8">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <span class="inline-block px-3 py-1 border border-white/20 text-xs font-bold mb-3 uppercase tracking-wider">Forecasting</span>
+              <h3 class="text-2xl font-bold mb-2">LSTM Weather Forecasting</h3>
+              <p class="text-sm text-gray-500">Deep Learning</p>
+            </div>
+          </div>
+          <p class="text-gray-400 leading-relaxed mb-6">
+            Created a time-series forecasting model improving short-term weather predictions. Enabled more reliable planning for logistics and operations teams.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag px-3 py-1 text-xs font-semibold cursor-pointer">Python</span>
+            <span class="tag px-3 py-1 text-xs font-semibold cursor-pointer">TensorFlow</span>
+            <span class="tag px-3 py-1 text-xs font-semibold cursor-pointer">LSTM</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="relative">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 py-20">
+      <div class="reveal text-center mb-16">
+        <p class="text-sm font-semibold uppercase tracking-widest text-gray-500 mb-3">Toolkit</p>
+        <h2 class="text-4xl lg:text-5xl font-bold tracking-tight">Skills & Expertise</h2>
+        <div class="w-24 h-px bg-white mx-auto mt-6"></div>
+      </div>
+
+      <!-- Interactive Skill Cards -->
+      <div class="grid md:grid-cols-3 gap-8 mb-12">
+        <div class="reveal skill-card card p-8 border-t-2 border-white">
+          <h3 class="text-xl font-bold text-center mb-6">Product & Strategy</h3>
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between text-sm mb-2">
+                <span class="font-medium text-gray-300">Roadmap Development</span>
+                <span class="font-bold">95%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%" data-width="95%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-2">
+                <span class="font-medium text-gray-300">GTM Strategy</span>
+                <span class="font-bold">90%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%" data-width="90%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-2">
+                <span class="font-medium text-gray-300">Stakeholder Mgmt</span>
+                <span class="font-bold">92%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%" data-width="92%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal skill-card card p-8 border-t-2 border-white">
+          <h3 class="text-xl font-bold text-center mb-6">AI & Machine Learning</h3>
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between text-sm mb-2">
+                <span class="font-medium text-gray-300">Python & ML</span>
+                <span class="font-bold">93%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%" data-width="93%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-2">
+                <span class="font-medium text-gray-300">TensorFlow</span>
+                <span class="font-bold">88%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%" data-width="88%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-2">
+                <span class="font-medium text-gray-300">GenAI Systems</span>
+                <span class="font-bold">90%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%" data-width="90%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal skill-card card p-8 border-t-2 border-white">
+          <h3 class="text-xl font-bold text-center mb-6">Data & Analytics</h3>
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between text-sm mb-2">
+                <span class="font-medium text-gray-300">SQL & Databases</span>
+                <span class="font-bold">91%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%" data-width="91%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-2">
+                <span class="font-medium text-gray-300">Tableau</span>
+                <span class="font-bold">87%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%" data-width="87%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-2">
+                <span class="font-medium text-gray-300">Data Analysis</span>
+                <span class="font-bold">94%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%" data-width="94%"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="flex-1 flex items-center justify-center">
-        <div class="w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden ring-1 ring-white/10">
-          <img src="portfolio.jpeg" alt="Vivaan" class="w-full h-full object-cover" />
-        <div class="relative flex justify-center lg:justify-end">
-          <div class="absolute -top-8 -right-4 w-32 h-32 rounded-full bg-fuchsia-400/40 blur-3xl animate-pulseSlow"></div>
-          <div class="absolute bottom-6 -left-6 w-32 h-32 rounded-full bg-cyan-400/40 blur-3xl animate-pulseSlow"></div>
-          <div class="glass rounded-[2rem] p-6 w-full max-w-md shadow-glow reveal animate-float">
-            <img src="portfolio.jpeg" alt="Vivaan Kaushik portrait" class="w-full h-72 object-cover rounded-2xl border border-white/10" />
-            <div class="mt-5 space-y-2">
-              <p class="font-medium text-lg">Vivaan Kaushik</p>
-              <p class="text-sm text-slate-300">Pittsburgh, PA · vkaushik@andrew.cmu.edu · +1 (412) 251-6314</p>
-              <div class="flex gap-4 text-sm pt-1">
-                <a class="text-indigo-200 hover:text-white" href="https://www.linkedin.com/in/vivaan-kaushik-96abb9302/" target="_blank">LinkedIn</a>
-                <a class="text-indigo-200 hover:text-white" href="https://github.com/VivaanNK/data-science-project" target="_blank">GitHub</a>
-                <a class="text-indigo-200 hover:text-white" href="https://ieeexplore.ieee.org/document/10983002" target="_blank">IEEE</a>
+      <!-- Tech Stack Tags -->
+      <div class="reveal">
+        <p class="text-center text-sm font-semibold text-gray-500 mb-6 uppercase tracking-wider">Technical Stack</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <span class="tag px-5 py-2 text-sm font-medium cursor-pointer">Python</span>
+          <span class="tag px-5 py-2 text-sm font-medium cursor-pointer">TensorFlow</span>
+          <span class="tag px-5 py-2 text-sm font-medium cursor-pointer">SQL</span>
+          <span class="tag px-5 py-2 text-sm font-medium cursor-pointer">Tableau</span>
+          <span class="tag px-5 py-2 text-sm font-medium cursor-pointer">Agile/Scrum</span>
+          <span class="tag px-5 py-2 text-sm font-medium cursor-pointer">LSTM</span>
+          <span class="tag px-5 py-2 text-sm font-medium cursor-pointer">Excel</span>
+          <span class="tag px-5 py-2 text-sm font-medium cursor-pointer">R</span>
+          <span class="tag px-5 py-2 text-sm font-medium cursor-pointer">MATLAB</span>
+          <span class="tag px-5 py-2 text-sm font-medium cursor-pointer">Java</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="relative">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 py-20">
+      <div class="reveal text-center mb-16">
+        <p class="text-sm font-semibold uppercase tracking-widest text-gray-500 mb-3">Background</p>
+        <h2 class="text-4xl lg:text-5xl font-bold tracking-tight">About Me</h2>
+        <div class="w-24 h-px bg-white mx-auto mt-6"></div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12">
+        <div class="reveal">
+          <div class="card p-8 border-l-4 border-white">
+            <h3 class="text-2xl font-bold mb-6">Education</h3>
+            <div class="space-y-6">
+              <div class="pl-6 border-l-2 border-white py-2">
+                <p class="font-bold text-lg">Carnegie Mellon University</p>
+                <p class="text-gray-400 mt-1">MS Engineering Management & AI</p>
+                <div class="flex items-center gap-4 mt-2 flex-wrap">
+                  <span class="text-sm text-gray-500">Dec 2026</span>
+                  <span class="px-3 py-1 border border-white/20 text-xs font-bold">GPA: 4.0/4.0</span>
+                </div>
+              </div>
+              <div class="pl-6 border-l-2 border-gray-700 py-2">
+                <p class="font-bold text-lg">VIT Vellore</p>
+                <p class="text-gray-400 mt-1">B.Tech Computer Science Engineering</p>
+                <div class="flex items-center gap-4 mt-2 flex-wrap">
+                  <span class="text-sm text-gray-500">May 2025</span>
+                  <span class="px-3 py-1 border border-white/20 text-xs font-bold">Top 2% · CGPA: 9.23/10</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="card p-8 border-l-4 border-white">
+            <h3 class="text-2xl font-bold mb-6">Leadership & Impact</h3>
+            <div class="space-y-4">
+              <div class="flex gap-4 items-start">
+                <div class="w-1 h-1 bg-white mt-2 flex-shrink-0"></div>
+                <div>
+                  <p class="font-semibold">Medical Outreach</p>
+                  <p class="text-gray-400 text-sm">Coordinated medical camps serving 300+ patients</p>
+                </div>
+              </div>
+              <div class="flex gap-4 items-start">
+                <div class="w-1 h-1 bg-white mt-2 flex-shrink-0"></div>
+                <div>
+                  <p class="font-semibold">Tech Events</p>
+                  <p class="text-gray-400 text-sm">Organized IEEE & Robotics Club innovation events</p>
+                </div>
+              </div>
+              <div class="flex gap-4 items-start">
+                <div class="w-1 h-1 bg-white mt-2 flex-shrink-0"></div>
+                <div>
+                  <p class="font-semibold">Community Service</p>
+                  <p class="text-gray-400 text-sm">Led community outreach through NGO Anokha</p>
+                </div>
               </div>
             </div>
           </div>
@@ -199,227 +744,57 @@
       </div>
     </div>
   </section>
-      </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="border-t border-neutral-800/60">
-    <div class="max-w-6xl mx-auto px-6 py-24">
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div>
-      <section id="about" class="max-w-6xl mx-auto px-6 pt-20">
-        <div class="glass rounded-3xl p-8 md:p-10 reveal">
-          <h2 class="text-3xl font-semibold">About</h2>
-          <p class="mt-4 text-neutral-300">
-            Hey there — I'm Vivaan, a master's student at Carnegie Mellon exploring the intersection of product management and AI. 
-            I enjoy turning complex ideas into practical solutions—whether that’s building a GenAI automation system at EY, driving 
-            B2B growth strategies at Voll Santé, or publishing machine learning security research.
-          <p class="mt-4 text-slate-300 leading-relaxed">
-            I'm obsessed with building products at the intersection of AI, human behavior, and business outcomes. From leading GenAI automation rollouts at enterprise scale to crafting GTM strategies for early-stage startups, I enjoy shipping fast, learning from users, and iterating with intent.
-          </p>
-
-          <div class="mt-6 grid sm:grid-cols-2 gap-4">
-            <div class="bg-neutral-800 p-4 rounded-md">
-              <div class="text-xs text-neutral-400">Education</div>
-              <div class="mt-1 font-medium">CMU — MS Engineering Management & AI (Dec 2026)</div>
-              <div class="text-sm text-neutral-400 mt-1">VIT Vellore — B.Tech Computer Science (May 2025)</div>
-          <div class="grid md:grid-cols-2 gap-6 mt-8">
-            <div class="rounded-2xl border border-white/10 p-5 bg-white/5">
-              <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Education</p>
-              <p class="mt-3 font-medium">Carnegie Mellon University</p>
-              <p class="text-sm text-slate-300">MS in Engineering Management & Artificial Intelligence · Dec 2026</p>
-              <p class="mt-3 font-medium">VIT Vellore</p>
-              <p class="text-sm text-slate-300">B.Tech Computer Science Engineering · May 2025 · Top 2%</p>
-            </div>
-            <div class="bg-neutral-800 p-4 rounded-md">
-              <div class="text-xs text-neutral-400">Skills</div>
-              <div class="mt-1 font-medium">Product Strategy • Roadmaps • Stakeholder Mgmt</div>
-              <div class="text-sm text-neutral-400 mt-1">Technical: Python, SQL, Tableau, ML, LLMs</div>
-            <div class="rounded-2xl border border-white/10 p-5 bg-white/5">
-              <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Core Stack</p>
-              <p class="mt-3 text-slate-200">Python · SQL · Tableau · TensorFlow · Product Roadmapping · GTM Strategy · Stakeholder Management</p>
-              <p class="mt-4 text-sm text-slate-300">Leadership: medical camps (300+ patients), IEEE & Robotics club events, NGO outreach.</p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <h3 class="text-sm uppercase text-neutral-400 tracking-wide">Leadership & Service</h3>
-          <ul class="mt-4 space-y-3 text-neutral-300">
-            <li>Coordinated medical camps serving 300+ patients.</li>
-            <li>Organized tech fests (IEEE, Robotics Club) and led student NGOs.</li>
-            <li>Strong cross-functional communicator with experience handling stakeholders across engineering and business.</li>
-          </ul>
-      </section>
-
-      <section id="experience" class="max-w-6xl mx-auto px-6 pt-20">
-        <h2 class="text-3xl font-semibold reveal">Experience Timeline</h2>
-        <div class="timeline relative mt-8 pl-10 space-y-6">
-          <article class="glass rounded-2xl p-6 reveal">
-            <div class="absolute -left-[1px] mt-2 w-4 h-4 rounded-full bg-indigo-300"></div>
-            <h3 class="font-semibold">Voll Santé · Product Strategy Intern</h3>
-            <p class="text-sm text-slate-300">Jun 2025 – Aug 2025 · Mumbai, India</p>
-            <ul class="mt-3 list-disc ml-5 text-slate-200 space-y-1">
-              <li>Launched GTM strategy for new wellness lines, producing 15+ qualified B2B leads.</li>
-              <li>Drove 3 co-branded campaigns that improved lead-to-conversion by 30%.</li>
-            </ul>
-          </article>
-          <article class="glass rounded-2xl p-6 reveal">
-            <h3 class="font-semibold">Ernst & Young · Product Management Intern (GenAI)</h3>
-            <p class="text-sm text-slate-300">Jan 2025 – Jun 2025 · Mumbai, India</p>
-            <ul class="mt-3 list-disc ml-5 text-slate-200 space-y-1">
-              <li>Owned GenAI procurement automation delivery; reduced manual effort by 40%.</li>
-              <li>Shipped real-time dashboard analytics cutting decision turnaround by 25%.</li>
-            </ul>
-          </article>
-          <article class="glass rounded-2xl p-6 reveal">
-            <h3 class="font-semibold">Franklin Templeton · Information Security Intern</h3>
-            <p class="text-sm text-slate-300">May 2024 – Jun 2024 · Mumbai, India</p>
-            <ul class="mt-3 list-disc ml-5 text-slate-200 space-y-1">
-              <li>Improved phishing model accuracy by 18% while supporting audit readiness.</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section id="experience" class="border-t border-neutral-800/60">
-    <div class="max-w-6xl mx-auto px-6 py-20">
-      <h2 class="text-3xl font-semibold">Experience</h2>
-      <div class="mt-8 space-y-6">
-        <!-- EY -->
-        <article class="bg-neutral-850 p-6 rounded-2xl border border-neutral-800">
-          <h3 class="text-lg font-semibold">Ernst & Young — Product Management Intern (GenAI)</h3>
-          <p class="text-sm text-neutral-400">Jan 2025 — Jun 2025 • Mumbai, India</p>
-          <ul class="mt-4 text-neutral-300 list-disc ml-5 space-y-2">
-            <li>Designed and launched a GenAI-powered procurement automation system reducing manual work by 40%.</li>
-            <li>Built roadmaps and stakeholder adoption strategies that increased efficiency by 25%.</li>
-          </ul>
-        </article>
-
-        <!-- Voll Santé -->
-        <article class="bg-neutral-850 p-6 rounded-2xl border border-neutral-800">
-          <h3 class="text-lg font-semibold">Voll Santé — Product Strategy Intern</h3>
-          <p class="text-sm text-neutral-400">Mumbai, India</p>
-          <ul class="mt-4 text-neutral-300 list-disc ml-5 space-y-2">
-            <li>Led B2B partnership strategy generating 15+ qualified leads and improving partner conversion by 30%.</li>
-            <li>Delivered competitor benchmarking and GTM collateral across 3 verticals.</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects" class="border-t border-neutral-800/60">
-    <div class="max-w-6xl mx-auto px-6 py-20">
-      <h2 class="text-3xl font-semibold">Projects</h2>
-      <p class="mt-3 text-neutral-400">Highlighted projects from resume + PM-focused additions.</p>
-
-      <div class="mt-8 grid md:grid-cols-2 gap-6">
-        <!-- Resume Projects -->
-        <article class="bg-neutral-850 p-6 rounded-2xl border border-neutral-800">
-          <h3 class="text-xl font-semibold">ML Intrusion Detection System (UPCON 2024)</h3>
-          <p class="text-sm text-pink-400 mt-1">Published • 92% Accuracy</p>
-          <p class="mt-3 text-neutral-300">Built anomaly detection pipeline, IEEE published.</p>
-        </article>
-
-        <article class="bg-neutral-850 p-6 rounded-2xl border border-neutral-800">
-          <h3 class="text-xl font-semibold">STD Prediction with ML</h3>
-          <p class="text-sm text-neutral-400 mt-1">87% Accuracy</p>
-          <p class="mt-3 text-neutral-300">Created classifiers for diagnostic decision-making.</p>
-        </article>
-
-        <!-- PM Projects -->
-        <article class="bg-neutral-850 p-6 rounded-2xl border border-neutral-800">
-          <h3 class="text-xl font-semibold">AI Product Prioritization Simulator</h3>
-          <p class="text-sm text-emerald-400 mt-1">PM + Data-Driven</p>
-          <p class="mt-3 text-neutral-300">Tool to help product teams prioritize features by simulating customer impact and ROI.</p>
-        </article>
-
-        <article class="bg-neutral-850 p-6 rounded-2xl border border-neutral-800">
-          <h3 class="text-xl font-semibold">GenAI Deployment & Adoption Playbook</h3>
-          <p class="text-sm text-emerald-400 mt-1">Strategy + Adoption</p>
-          <p class="mt-3 text-neutral-300">Playbook + demo for enterprise GenAI rollout, with adoption metrics & templates.</p>
-        </article>
-      </div>
-    </div>
-  </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="border-t border-neutral-800/60">
-    <div class="max-w-4xl mx-auto px-6 py-20 text-center">
-      <h2 class="text-3xl font-semibold">Let's connect</h2>
-      <p class="mt-3 text-neutral-400">
-        Open to product roles, AI strategy collaborations, or just a coffee chat about tech.
-      </p>
-
-      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="mailto:vkaushik@andrew.cmu.edu" class="px-6 py-3 bg-neutral-100 text-neutral-900 rounded-md font-medium">Email Vivaan</a>
-        <a href="https://www.linkedin.com/in/vivaan-kaushik-96abb9302/" class="px-6 py-3 border border-neutral-700 rounded-md">LinkedIn</a>
-        <a href="resume.pdf" target="_blank"
-           class="px-6 py-3 border border-neutral-700 rounded-md">Download Resume</a>
+  <section id="contact" class="relative">
+    <div class="max-w-4xl mx-auto px-6 lg:px-12 py-20 text-center">
+      <div class="reveal">
+        <p class="text-sm font-semibold uppercase tracking-widest text-gray-500 mb-3">Get In Touch</p>
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6 tracking-tight">Let's Build Something</h2>
+        <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+          Open to product roles, AI collaborations, startup opportunities, and conversations about building impactful technology
+        </p>
       </div>
-      </section>
 
-      <section id="projects" class="max-w-6xl mx-auto px-6 pt-20">
-        <div class="flex flex-wrap items-end justify-between gap-4 reveal">
-          <div>
-            <h2 class="text-3xl font-semibold">Projects</h2>
-            <p class="text-slate-300 mt-2">A mix of AI systems, product thinking, and startup building.</p>
-          </div>
+      <div class="reveal flex flex-wrap justify-center gap-4 mb-12">
+        <a href="mailto:vkaushik@andrew.cmu.edu" class="btn-primary px-8 py-4 bg-white text-black rounded-none font-bold text-lg">
+          Email Me
+        </a>
+        <a href="https://www.linkedin.com/in/vivaan-kaushik-96abb9302/" target="_blank" class="btn-primary px-8 py-4 border border-white text-white rounded-none font-bold text-lg hover:bg-white hover:text-black">
+          LinkedIn
+        </a>
+        <a href="tel:+14122516314" class="btn-primary px-8 py-4 border border-white text-white rounded-none font-bold text-lg hover:bg-white hover:text-black">
+          Call
+        </a>
+      </div>
+
+      <div class="reveal card p-8 inline-block border-t-2 border-white">
+        <div class="space-y-2 text-gray-300">
+          <p>vkaushik@andrew.cmu.edu</p>
+          <p>+1 (412) 251-6314</p>
+          <p>Pittsburgh, PA</p>
         </div>
-
-        <div class="grid md:grid-cols-2 gap-6 mt-8">
-          <article class="glass rounded-3xl p-6 reveal hover:-translate-y-1 transition">
-            <p class="text-xs uppercase tracking-[0.2em] text-cyan-300">Ongoing startup</p>
-            <h3 class="text-2xl font-semibold mt-2">GENNA · Fashion-Tech Startup</h3>
-            <p class="text-slate-300 mt-3">Building an AI-powered fashion intelligence platform that personalizes styling and helps brands forecast demand and trends in real time.</p>
-            <ul class="mt-4 list-disc ml-5 text-slate-200 space-y-1">
-              <li>Combines consumer preference modeling with trend analytics.</li>
-              <li>Focused on delightful UX + actionable analytics for creators and brands.</li>
-            </ul>
-          </article>
-
-          <article class="glass rounded-3xl p-6 reveal hover:-translate-y-1 transition">
-            <p class="text-xs uppercase tracking-[0.2em] text-indigo-300">Research</p>
-            <h3 class="text-2xl font-semibold mt-2">ML Intrusion Detection System</h3>
-            <p class="text-slate-300 mt-3">Cybersecurity anomaly detection project published at IEEE UPCON 2024.</p>
-          </article>
-
-          <article class="glass rounded-3xl p-6 reveal hover:-translate-y-1 transition">
-            <p class="text-xs uppercase tracking-[0.2em] text-fuchsia-300">Machine Learning</p>
-            <h3 class="text-2xl font-semibold mt-2">STD Prediction with ML</h3>
-            <p class="text-slate-300 mt-3">Developed a screening model that surfaces key health risk patterns for earlier interventions.</p>
-          </article>
-
-          <article class="glass rounded-3xl p-6 reveal hover:-translate-y-1 transition">
-            <p class="text-xs uppercase tracking-[0.2em] text-emerald-300">Forecasting</p>
-            <h3 class="text-2xl font-semibold mt-2">LSTM Weather Forecasting</h3>
-            <p class="text-slate-300 mt-3">Time-series model improving short-term forecast reliability for logistics and operations planning.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="contact" class="max-w-4xl mx-auto px-6 pt-24 text-center">
-        <div class="glass rounded-3xl p-10 reveal">
-          <h2 class="text-4xl font-semibold">Let's build something unforgettable.</h2>
-          <p class="mt-4 text-slate-300">Open to PM, AI strategy, startup collaborations, and high-impact conversations.</p>
-          <div class="mt-8 flex flex-wrap justify-center gap-3">
-            <a href="mailto:vkaushik@andrew.cmu.edu" class="px-6 py-3 rounded-full bg-white text-slate-900 font-semibold hover:scale-105 transition">Email Me</a>
-            <a href="https://www.linkedin.com/in/vivaan-kaushik-96abb9302/" target="_blank" class="px-6 py-3 rounded-full border border-white/25 hover:border-white/70">LinkedIn</a>
-            <a href="resume.pdf" target="_blank" class="px-6 py-3 rounded-full border border-white/25 hover:border-white/70">View Resume</a>
-          </div>
-        </div>
-        <p class="text-xs text-slate-500 mt-8">© 2026 Vivaan Kaushik · Crafted with curiosity.</p>
-      </section>
-    </main>
-  </div>
-
-      <p class="mt-8 text-sm text-neutral-500">© 2025 Vivaan Kaushik</p>
+      </div>
     </div>
   </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-gray-900 py-8">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm text-gray-500">© 2026 Vivaan Kaushik</p>
+        <div class="flex gap-6 text-sm">
+          <a href="https://www.linkedin.com/in/vivaan-kaushik-96abb9302/" target="_blank" class="text-gray-500 hover:text-white transition-colors">LinkedIn</a>
+          <a href="https://github.com/VivaanNK/data-science-project" target="_blank" class="text-gray-500 hover:text-white transition-colors">GitHub</a>
+          <a href="https://ieeexplore.ieee.org/document/10983002" target="_blank" class="text-gray-500 hover:text-white transition-colors">IEEE</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
   <script>
+    // Scroll reveal animation
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -427,12 +802,42 @@
           entry.target.classList.add('visible');
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
 
-  <div class="h-24"></div>
-    reveals.forEach((item, index) => {
-      item.style.transitionDelay = `${Math.min(index * 80, 350)}ms`;
-      observer.observe(item);
+    reveals.forEach((element, index) => {
+      element.style.transitionDelay = `${Math.min(index * 50, 300)}ms`;
+      observer.observe(element);
+    });
+
+    // Progress bar animation
+    const progressBars = document.querySelectorAll('.progress-fill');
+    const progressObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const bar = entry.target;
+          const width = bar.getAttribute('data-width');
+          setTimeout(() => {
+            bar.style.width = width;
+          }, 300);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    progressBars.forEach(bar => progressObserver.observe(bar));
+
+    // Smooth scroll with snap
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
     });
   </script>
 </body>
